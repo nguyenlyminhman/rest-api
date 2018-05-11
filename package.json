@@ -4,6 +4,7 @@
   "description": "\"building RESTful API with nodejs express mongodb\"",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",

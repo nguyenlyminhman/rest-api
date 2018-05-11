@@ -1,14 +1,23 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 let Book = require('./models/book');
-
 let bookRouter = express.Router();
-
 let db = mongoose.connect('mongodb://127.0.0.1:27017/bookApi');
 
 
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
 bookRouter.route('/books')
+    //save new book informations to database 
+    .post((req,res)=>{
+        let book = new Book(req.body);
+        book.save();
+        res.status(201).send(book);
+    })
+    //get all book or get book by its author.
     .get((req, res) => {
         let query = {};
         //check query in address bar when title is not exist.
