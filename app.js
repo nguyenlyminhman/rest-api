@@ -10,7 +10,13 @@ let db = mongoose.connect('mongodb://127.0.0.1:27017/bookApi');
 
 bookRouter.route('/books')
     .get((req, res) => {
-        Book.find((err, data) => {
+        let query = {};
+        //check query in address bar when title is not exist.
+        if(req.query.title){
+            query.title = req.query.title;
+        }
+        //get book infomation.
+        Book.find(query, (err, data) => {
             if (err) {
                 res.status(500).send(err);
             } else {
