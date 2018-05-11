@@ -3,7 +3,7 @@ let Book = require('../models/book');
 let bRouter = express.Router();
 
 
-bRouter.route('/books')
+bRouter.route('/')
 //save new book informations to database 
 .post((req,res)=>{
     let book = new Book(req.body);
@@ -27,7 +27,7 @@ bRouter.route('/books')
     })
 })
 //get book by _id
-bRouter.route('/books/:id')
+bRouter.route('/:id')
 .get((req, res) => {
     //get book infomation based on its _id.
     Book.findById(req.params.id, (err, data) => {
