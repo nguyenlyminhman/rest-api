@@ -36,7 +36,7 @@ bRouter.use('/:id', (req, res, next) => {
             req.book = data;
             next();
         } else {
-            res.status(404).send('Not things found')
+            res.status(404).send('Book is not found')
         }
     })
 })
@@ -45,8 +45,8 @@ bRouter.route('/:id')
     .get((req, res) => {
         res.json(req.book);
     })
+    //update book based on its id. Note: using for add new field 
     .put((req, res) => {
-        //update book based on its id.
         req.book.title = req.body.title;
         req.book.author = req.body.author;
         req.book.genre = req.body.genre;
@@ -59,6 +59,7 @@ bRouter.route('/:id')
             }
         });
     })
+    //update book information based on its id. Note: using for update specified field
     .patch((req, res) => {
         if (req.body._id)
             delete req.body._id;
@@ -71,6 +72,16 @@ bRouter.route('/:id')
                 res.status(500).send(err);
             } else {
                 res.json(req.book);
+            }
+        });
+    })
+    //remove a document base on its id.
+    .delete((req, res) => {
+        req.book.remove(err => {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                res.status(204).send("Removed");
             }
         });
     })
