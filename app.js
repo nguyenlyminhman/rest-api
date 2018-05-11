@@ -12,8 +12,8 @@ bookRouter.route('/books')
     .get((req, res) => {
         let query = {};
         //check query in address bar when title is not exist.
-        if(req.query.title){
-            query.title = req.query.title;
+        if(req.query.author){
+            query.author = req.query.author;
         }
         //get book infomation.
         Book.find(query, (err, data) => {
@@ -24,8 +24,18 @@ bookRouter.route('/books')
             }
         })
     })
-
-
+    //get book by _id
+    bookRouter.route('/books/:id')
+    .get((req, res) => {
+        //get book infomation based on its _id.
+        Book.findById(req.params.id, (err, data) => {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                res.json(data);
+            }
+        })
+    })
 
 
 app.use('/api', bookRouter);
